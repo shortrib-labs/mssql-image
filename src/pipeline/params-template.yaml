@@ -5,7 +5,7 @@ bump: patch
 domain: #@ data.values.domain
 bucket: images
 
-msssql_edition: #@ data.values.mssql.edition
+mssql_edition: #@ data.values.mssql.edition
 
 ssh: 
   authorized_keys: #@ data.values.ssh.authorized_keys

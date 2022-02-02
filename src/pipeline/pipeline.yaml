@@ -54,7 +54,7 @@ generate-user-data:
       - -c
       - |
         echo "#cloud-config" > user-data/user-data.yaml
-        ytt --ignore-unknown-comments -f "source/src/cloud-init/template/user-data.yaml" \
+        ytt --ignore-unknown-comments -f "source/src/cloud-init/user-data.yaml" \
             --data-value domain=${DOMAIN} \
             --data-value hashed_password="$(echo ${PASSWORD} | openssl passwd -6 -salt $(openssl rand -base64 16) -stdin)" \
             --data-value-yaml ssh="${SSH}" \
