@@ -1,0 +1,23 @@
+#@ load("@ytt:data", "data")
+---
+bump: patch
+
+domain: #@ data.values.domain
+bucket: images
+
+msssql_edition: #@ data.values.mssql.edition
+
+ssh: 
+  authorized_keys: #@ data.values.ssh.authorized_keys
+
+base_template: #@ data.values.base_template
+
+template: #@ data.values.template
+
+source:
+  repository: https://github.com/shortrib-net/mssql-image
+  branch: #@ data.values.branch
+
+microsoft:  #@ data.values.microsoft
+tailscale: #@ data.values.tailscale
+
