@@ -4,6 +4,8 @@ BRANCH=${1:-main}
 
 ytt --ignore-unknown-comments -f ${SOURCE_DIR}/pipeline/params-template.yaml -f ${PARAMS_YAML} \
     --data-value branch="${BRANCH}" \
+    --data-value mssql.pgp_key="$(curl --silent https://packages.microsoft.com/keys/microsoft.asc)" \
+    --data-value mssql.repository="$(curl --silent https://packages.microsoft.com/config/ubuntu/20.04/mssql-server-2019.list)" \
     --data-value microsoft.pgp_key="$(curl --silent https://packages.microsoft.com/keys/microsoft.asc)" \
     --data-value microsoft.repository="$(curl --silent https://packages.microsoft.com/config/ubuntu/20.04/prod.list)" \
     --data-value tailscale.pgp_key="$(curl --silent https://pkgs.tailscale.com/stable/ubuntu/focal.gpg)" \
