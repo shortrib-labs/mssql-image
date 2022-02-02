@@ -59,7 +59,7 @@ build {
     ]
     environment_vars = [
       "MSSQL_EDITION=${var.mssql_edition}",
-      "MSSQL_SA_PASSWORD="${var.sa_password}"
+      "MSSQL_SA_PASSWORD=${var.sa_password}"
     ]
   }
 
