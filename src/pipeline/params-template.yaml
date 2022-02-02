@@ -18,6 +18,7 @@ source:
   repository: https://github.com/shortrib-net/mssql-image
   branch: #@ data.values.branch
 
+  mssql:  #@ data.values.mssql
 microsoft:  #@ data.values.microsoft
 tailscale: #@ data.values.tailscale
 

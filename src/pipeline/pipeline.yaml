@@ -46,6 +46,7 @@ generate-user-data:
       DOMAIN: ((domain))
       PASSWORD: ((password))
       SSH: ((ssh))
+      MSSQL_APT: ((myssql))
       MICROSOFT_APT: ((microsoft))
       TAILSCALE_APT: ((tailscale))
     run:
@@ -59,6 +60,7 @@ generate-user-data:
             --data-value hashed_password="$(echo ${PASSWORD} | openssl passwd -6 -salt $(openssl rand -base64 16) -stdin)" \
             --data-value-yaml ssh="${SSH}" \
             --data-value-yaml ssh_host_key="${SSH_HOST_KEY}" \
+            --data-value-yaml mssql="${MSSQL_APT}" \
             --data-value-yaml microsoft="${MICROSOFT_APT}" \
             --data-value-yaml tailscale="${TAILSCALE_APT}" \
           >> user-data/user-data.yaml
@@ -81,7 +83,7 @@ packer-params: &packer-params
   PKR_VAR_vsphere_network: ((vsphere.network)) 
   PKR_VAR_vsphere_datastore: ((vsphere.datastore)) 
   PKR_VAR_mssql_edition: ((mssql_edition))
-  PKG_VAR_sa_password: ((sa_password))
+  PKR_VAR_sa_password: ((sa_password))
 
 jobs:
 - name: validate-template
@@ -153,7 +155,8 @@ jobs:
 
           umask 077
           echo "${SSH_PRIVATE_KEY}" > ${ssh_key}
-          packer build --var project_root=${project_root} \
+          PACKER_LOG=yippers
+          packer buila --on-error=abort --var project_root=${project_root} \
               --var ssh_private_key_file=${ssh_key} \
               --var "user_data=$(cat user-data/user-data.yaml)" \
               --var output_directory=${output_directory} \

@@ -23,6 +23,9 @@ chpasswd:
 apt:
   preserve_sources_list: true
   sources:
+    mssql:
+      source: #@ data.values.mssql.repository 
+      key: #@ data.values.mssql.pgp_key
     microsoft:
       source: #@ data.values.microsoft.repository 
       key: #@ data.values.microsoft.pgp_key
