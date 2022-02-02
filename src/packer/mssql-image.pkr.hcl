@@ -57,11 +57,18 @@ build {
     scripts = [
       "${local.directories.source}/scripts/configure-server.sh ${var.mssql_edition} ${var.sa_password}",
     ]
+    environment_vars = [
+      "MSSQL_EDITION=${var.mssql_edition}",
+      "MSSQL_SA_PASSWORD="${var.sa_password}"
+    ]
   }
 
   provisioner "shell" {
     scripts = [
       "${local.directories.source}/scripts/install-client.sh",
+    ]
+    environment_vars = [
+      "ACCEPT_EULA=Y"
     ]
   }
 
