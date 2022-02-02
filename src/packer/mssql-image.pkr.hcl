@@ -55,7 +55,7 @@ build {
 
   provisioner "shell" {
     scripts = [
-      "${local.directories.source}/scripts/configure-server.sh ${var.mssql_edition} ${var.sa_password}",
+      "${local.directories.source}/scripts/configure-server.sh",
     ]
     environment_vars = [
       "MSSQL_EDITION=${var.mssql_edition}",
