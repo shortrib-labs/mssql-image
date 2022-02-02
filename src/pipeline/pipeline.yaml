@@ -53,15 +53,15 @@ generate-user-data:
       args:
       - -c
       - |
-        echo "#cloud-config" > user-data/user-data.yml
-        ytt --ignore-unknown-comments -f "source/src/cloud-init/template/user-data.yml" \
+        echo "#cloud-config" > user-data/user-data.yaml
+        ytt --ignore-unknown-comments -f "source/src/cloud-init/template/user-data.yaml" \
             --data-value domain=${DOMAIN} \
             --data-value hashed_password="$(echo ${PASSWORD} | openssl passwd -6 -salt $(openssl rand -base64 16) -stdin)" \
             --data-value-yaml ssh="${SSH}" \
             --data-value-yaml ssh_host_key="${SSH_HOST_KEY}" \
             --data-value-yaml microsoft="${MICROSOFT_APT}" \
             --data-value-yaml tailscale="${TAILSCALE_APT}" \
-          >> user-data/user-data.yml
+          >> user-data/user-data.yaml
 
 packer-params: &packer-params
   OVF_NAME: ((template.vm_name))
@@ -114,7 +114,7 @@ jobs:
           echo "${SSH_PRIVATE_KEY}" > ${ssh_key}
           packer validate --var project_root=${project_root} \
               --var ssh_private_key_file=${ssh_key} \
-              --var "user_data=$(cat user-data/user-data.yml)" \
+              --var "user_data=$(cat user-data/user-data.yaml)" \
               --var output_directory=${output_directory} \
             source/src/packer 
 - name: create-image
@@ -155,7 +155,7 @@ jobs:
           echo "${SSH_PRIVATE_KEY}" > ${ssh_key}
           packer build --var project_root=${project_root} \
               --var ssh_private_key_file=${ssh_key} \
-              --var "user_data=$(cat user-data/user-data.yml)" \
+              --var "user_data=$(cat user-data/user-data.yaml)" \
               --var output_directory=${output_directory} \
             source/src/packer 
   - task: convert-to-ova
