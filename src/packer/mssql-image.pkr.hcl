@@ -61,6 +61,7 @@ build {
       "MSSQL_EDITION=${var.mssql_edition}",
       "MSSQL_SA_PASSWORD=${var.sa_password}"
     ]
+    execute_command = "sudo -S env {{ .Vars }} {{ .Path }}"
   }
 
   provisioner "shell" {
@@ -70,6 +71,7 @@ build {
     environment_vars = [
       "ACCEPT_EULA=Y"
     ]
+    execute_command = "sudo -S env {{ .Vars }} {{ .Path }}"
   }
 
   provisioner "shell" {
